@@ -24,6 +24,7 @@
       }, this);
     },
 
+
     togglePiece: function(rowIndex, colIndex) {
       this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
       this.trigger('change');
@@ -61,8 +62,7 @@
       );
     },
 
-
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -78,12 +78,52 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+
+    //I: num
+    //O: boolean
+
+    //iterate over the row and add every index to some varible and check if the sum is more than one return true
+
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // craete a sum variable
+      var sum = 0;
+      //assign this.row to board variable
+      var board = this.rows();
+
+      var row = board[rowIndex];
+      console.log(row);
+      //iterate over the row
+      row.forEach((item) => {
+        //sum all the index
+        sum += item;
+      });
+      //if the sum grater than one return true
+      //if not return false
+      return sum > 1 ? true : false;
+
+
+
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      //create a board using this.rows()
+      var board = this.rows();
+      //iterate over each row in board
+      // board.forEach((row, i) => {
+      //   if (this.hasRowConflictAt(i)) {
+      //     return true;
+      //   }
+      // });
+      for (var i = 0; i < board.length; i++) {
+        //invoke hasRowConflictsAt for each row
+        if (this.hasRowConflictAt(i)) {
+          // if any return true return true
+          return true;
+        }
+      }
+
+      //else at end return false
       return false; // fixme
     },
 
