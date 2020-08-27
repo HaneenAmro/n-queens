@@ -91,7 +91,7 @@
       var board = this.rows();
 
       var row = board[rowIndex];
-      console.log(row);
+      // console.log(row);
       //iterate over the row
       row.forEach((item) => {
         //sum all the index
@@ -134,11 +134,37 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+    //craete sum varialbe
+      var sum = 0;
+      //assign this.row() to board variable
+      var board = this.rows();
+      //iterate over the board
+      for (var i = 0; i < board.length; i++) {
+      //add the value of the cuurent index  [rowi][coli] to sum
+        var row = board[i];
+        sum += row[colIndex];
+
+      }
+
+      //ir sum > 1 return true
+      return sum > 1 ? true : false;
+      //return false
+      // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //create board variable with this.rows()
+      //iterate over the board
+      //for each index we want to invoke hasColConflictAt
+      //if true return true
+      //return false
+      var board = this.rows();
+      for (var i = 0; i < board.length; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -149,28 +175,82 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var index = majorDiagonalColumnIndexAtFirstRow;
+      var board = this.rows();
+      var sum = 0;
+      for (var i = 0; i < board.length; i++) {
+      //  console.log("should be row: ", board[i][i]);
+        var x = i + index;
+        // console.log('should be value added to sum: ', board[i][x]);
+        // console.log('should be x: ', x);
+        // console.log("sum: ", sum);
+        // console.log("index: ", index);
+        if (board[i][x] !== undefined) {
+          sum += board[i][x];
+
+        }
+      }
+
+      return sum > 1 ? true : false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+
+      var board = this.rows();
+      //console.log('board length: ', board.length);
+
+      for (var i = -(board.length); i < board.length; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+
+
+      }
       return false; // fixme
     },
-
-
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var index = minorDiagonalColumnIndexAtFirstRow;
+      var rowIn = 0;
+      var n = this.get('n');
+      //console.log('****',this. _getFirstRowColumnIndexForMinorDiagonalOn());
+      var board = this.rows();
+      var sum = 0;
+      while (rowIn < n && index >= 0 ) {
+        if (index < n) {
+          sum += board[rowIn][index];
+        }
+        rowIn ++;
+        index --;
+
+      }
+
+      return sum > 1 ? true : false;
     },
+
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var board = this.rows();
+      var len = (board.length - 1) * 2;
+      //console.log('board length: ', board.length);
+
+      for (var i = 0; i < len; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+
+
+      }
       return false; // fixme
-    }
+    },
+
+
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
